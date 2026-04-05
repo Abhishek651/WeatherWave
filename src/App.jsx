@@ -9,6 +9,7 @@ import axios from 'axios'
 import Footer from './components/footer'
 import Skeleton from '@mui/material/Skeleton'
 import SunState from './components/sun'
+import AirQuality from './components/airQuality'
 
 function App() {
   //city weather data
@@ -36,7 +37,7 @@ function App() {
     setLoading(true);
     //save the city on every search
     setCurrentCity(city)
-    let response = await axios.get(`${weatherUrl}/forecast.json?key=${weatherKey}&q=${city.latitude},${city.longitude}&days=${days}&alerts=yes`)
+    let response = await axios.get(`${weatherUrl}/forecast.json?key=${weatherKey}&q=${city.latitude},${city.longitude}&days=${days}&alerts=yes&aqi=yes`)
     setCityData(response.data)
     setLoading(false);
     console.log(response)
@@ -73,6 +74,11 @@ function App() {
         <Skeleton variant="rounded" className='!w-[90%] md:!w-2xl lg:!w-5xl !h-48 md:!h-56 !mx-auto !rounded-2xl' />
       ) : (
         cityData && <Chart forecastHourly={cityData.forecast.forecastday[0].hour} />
+      )}
+      {loading ? (
+        <Skeleton variant="rounded" className='!w-[90%] md:!w-2xl lg:!w-5xl !h-24 !mx-auto !rounded-2xl' />
+      ) : (
+        cityData && <AirQuality airQuality={cityData.current.air_quality} />
       )}
       <Footer />
     </div>
