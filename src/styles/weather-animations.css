@@ -1,0 +1,246 @@
+/* ─────────────────────────────────────────
+   Keyframe Animations
+   Used by the pure-CSS weather icons below.
+   ───────────────────────────────────────── */
+
+/* Fades element from invisible to visible.
+   Used in reverse on sunny glow + rain streaks (so they fade OUT) */
+@keyframes fadeIn {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Shrinks element slightly — used in reverse on sunny outer ring
+   so it pulses outward (grows from .8 → 1) */
+@keyframes scaleDown {
+  0%   { transform: scale(1); }
+  100% { transform: scale(.8); }
+}
+
+/* Bobs the partly-cloudy cloud up and down (alternate = ping-pong) */
+@keyframes translateUp {
+  0%   { transform: translateY(15%); }
+  100% { transform: translateY(0); }
+}
+
+/* Drifts the cloudy icon left and right (alternate = ping-pong) */
+@keyframes driftX {
+  0%   { transform: translateX(-8%); }
+  100% { transform: translateX(8%); }
+}
+
+/* Grows rain streak from nothing to full height (scaleY) */
+@keyframes scaleUp {
+  0%   { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+
+/* Simulates lightning flashes via box-shadow color bursts.
+   Two separate flashes at ~50% and ~70%, with a yellow tint and blue tint. */
+@keyframes thunder {
+  0%   { box-shadow: 0 0 25px #fff; }             /* initial flash */
+  2%   { box-shadow: 0 0 25px rgba(0,0,0,.3); }   /* off */
+  49%  { box-shadow: 0 0 25px rgba(0,0,0,.3); }   /* off */
+  50%  { box-shadow: 0 0 25px #fff; }             /* flash 1 */
+  52%  { box-shadow: 0 0 25px #f7db6e; }          /* yellow tint */
+  53%  { box-shadow: 0 0 25px rgba(0,0,0,.3); }   /* off */
+  69%  { box-shadow: 0 0 25px rgba(0,0,0,.3); }   /* off */
+  70%  { box-shadow: 0 0 25px #fff; }             /* flash 2 */
+  71%  { box-shadow: 0 0 25px rgba(0,0,0,.3); }   /* off */
+  75%  { box-shadow: 0 0 25px rgba(0,0,0,.3); }   /* off */
+  76%  { box-shadow: 0 0 25px #fff; }             /* flash 3 */
+  77%  { box-shadow: 0 0 25px #a8d3f0; }          /* blue tint */
+  78%  { box-shadow: 0 0 25px rgba(0,0,0,.3); }   /* off */
+  100% { box-shadow: 0 0 25px rgba(0,0,0,.3); }   /* off */
+}
+
+/* ─────────────────────────────────────────
+   Shared container size for all icons.
+   Each icon is a 5rem × 5rem relative box;
+   children are positioned absolutely inside.
+   ───────────────────────────────────────── */
+.wi-sunny,
+.wi-partly-cloudy,
+.wi-cloudy,
+.wi-rainy,
+.wi-thundery {
+  position: relative;
+  width: 5rem;
+  height: 5rem;
+}
+
+/* Animate the whole cloudy container left/right */
+.wi-cloudy {
+  will-change: transform;
+  animation: driftX 3s ease-in-out infinite alternate;
+}
+
+/* ─────────────────────────────────────────
+   Sunny / Sun (shared with partly-cloudy)
+   ::before = the solid yellow sun circle
+   ::after  = the pulsing outer glow ring
+   ───────────────────────────────────────── */
+.wi-sunny::before,
+.wi-partly-cloudy__sun::before {
+  content: "";
+  position: absolute;
+  height: 80%; width: 80%;
+  top: 10%; right: 10%;
+  border-radius: 50%;
+  z-index: 2;
+  background-color: #f1c40f;
+  background-image: radial-gradient(#f1c40f, #f39c12);
+  box-shadow: 0 0 25px #917508;
+}
+.wi-sunny::after,
+.wi-partly-cloudy__sun::after {
+  content: "";
+  position: absolute;
+  height: 100%; width: 100%;
+  border-radius: 50%;
+  z-index: 1;
+  background-color: #f39c12;
+  will-change: opacity, transform;
+  animation: fadeIn 2s linear infinite reverse,
+             scaleDown 2s linear infinite reverse;
+}
+
+/* ─────────────────────────────────────────
+   Cloud shape — shared across cloudy,
+   partly-cloudy, rainy, and thundery.
+   Two pseudo-elements form the cloud:
+   ::before = small right lobe
+   ::after  = larger left lobe
+   ───────────────────────────────────────── */
+.wi-cloudy::before,
+.wi-partly-cloudy__cloud::before,
+.wi-rainy__cloud::before,
+.wi-thundery__cloud::before {
+  content: "";
+  position: absolute;
+  height: 40%; width: 40%;
+  top: 30%; right: 0%;
+  border-radius: 50%;
+  border-bottom-left-radius: 0;
+  z-index: 2;
+  background-color: #ecf0f1;
+  background-image: radial-gradient(#ecf0f1, #bdc3c7);
+  box-shadow: 0 0 25px rgba(0,0,0,.3);
+}
+.wi-cloudy::after,
+.wi-partly-cloudy__cloud::after,
+.wi-rainy__cloud::after,
+.wi-thundery__cloud::after {
+  content: "";
+  position: absolute;
+  height: 60%; width: 70%;
+  top: 10%; right: 30%;
+  border-radius: 50%;
+  border-bottom-right-radius: 0;
+  z-index: 1;
+  background-color: #ecf0f1;
+  background-image: radial-gradient(#ecf0f1, #bdc3c7);
+  box-shadow: 0 0 25px rgba(0,0,0,.3);
+}
+
+/* ─────────────────────────────────────────
+   Partly Cloudy
+   Sun sits behind (z-index 1), cloud floats
+   in front (z-index 2) and bobs via translateUp.
+   ───────────────────────────────────────── */
+.wi-partly-cloudy__sun {
+  position: absolute;
+  width: 100%; height: 100%;
+  z-index: 1;
+}
+.wi-partly-cloudy__cloud {
+  position: absolute;
+  width: 60%; height: 60%;
+  top: 40%;
+  z-index: 2;
+  will-change: transform;
+  animation: translateUp 2s linear infinite alternate;
+}
+
+/* ─────────────────────────────────────────
+   Rainy / Thundery — cloud layer
+   Overrides the shared white cloud color
+   to grey (#95a5a6) for rain/thunder icons.
+   ───────────────────────────────────────── */
+.wi-rainy__cloud,
+.wi-thundery__cloud {
+  position: absolute;
+  height: 100%; width: 100%;
+  z-index: 2;
+}
+.wi-rainy__cloud::before,
+.wi-rainy__cloud::after {
+  background-color: #95a5a6;
+  background-image: radial-gradient(#95a5a6, #7f8c8d);
+}
+
+/* ─────────────────────────────────────────
+   Rain streaks (shared by rainy + thundery)
+   ::before = left streak, starts immediately
+   ::after  = right streak, delayed by 0.4s
+   Both grow via scaleUp and fade via fadeIn (reversed).
+   ───────────────────────────────────────── */
+.wi-rainy__rain,
+.wi-thundery__rain {
+  position: absolute;
+  height: 100%; width: 100%;
+  z-index: 1;
+  overflow: hidden;
+}
+.wi-rainy__rain::before,
+.wi-thundery__rain::before {
+  content: "";
+  position: absolute;
+  height: 80%; width: 20%;
+  top: 20%; right: 50%;
+  z-index: 1;
+  background-image: linear-gradient(transparent, #94cdd1);
+  will-change: opacity, transform;
+  animation: fadeIn 1s ease-out infinite reverse,
+             scaleUp 1s ease-out infinite;
+}
+.wi-rainy__rain::after,
+.wi-thundery__rain::after {
+  content: "";
+  position: absolute;
+  height: 60%; width: 20%;
+  top: 40%; right: 20%;
+  z-index: 1;
+  opacity: 0;
+  background-image: linear-gradient(transparent, #94cdd1);
+  will-change: opacity, transform;
+  animation: fadeIn 2s ease-out .4s infinite reverse,
+             scaleUp 2s ease-out .4s infinite;
+}
+
+/* ─────────────────────────────────────────
+   Thundery overrides
+   Replaces grey cloud with dark (#4d5656) and
+   applies the lightning box-shadow animation.
+   Rain streaks run faster than regular rain.
+   The two cloud lobes are offset by 0.02s so
+   they don't flash in perfect sync.
+   ───────────────────────────────────────── */
+.wi-thundery__cloud::before {
+  background-color: #4d5656;
+  background-image: radial-gradient(#4d5656, #393c3c);
+  animation: thunder 4s linear .02s infinite alternate;
+}
+.wi-thundery__cloud::after {
+  background-color: #4d5656;
+  background-image: radial-gradient(#4d5656, #393c3c);
+  animation: thunder 4s linear infinite alternate;
+}
+.wi-thundery__rain::before {
+  animation: fadeIn .5s ease-out infinite reverse,
+             scaleUp .5s ease-out infinite;
+}
+.wi-thundery__rain::after {
+  animation: fadeIn .75s ease-out .2s infinite reverse,
+             scaleUp .75s ease-out .2s infinite;
+}

@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@theme {
+  --color-purple-heart-50: #f7edfe;
+  --color-purple-heart-100: #ebd4fc;
+  --color-purple-heart-200: #dbacf8;
+  --color-purple-heart-300: #ce86f6;
+  --color-purple-heart-400: #c15af1;
+  --color-purple-heart-900: #1d0128;
+}
+
+* {
+  font-family: 'Poppins', sans-serif;
+}

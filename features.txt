@@ -1,0 +1,13 @@
+Air quality index — add &aqi=yes to the forecast URL, data comes in current.air_quality
+
+Weather alerts display — you already fetch alerts.alert, just need a component to show them
+
+Unit toggle — switch between °C / °F and km/h / mph
+
+Dark/light mode toggle
+
+Animated weather icons based on condition code
+
+Geolocation — use navigator.geolocation to auto-detect user's location on load instead of defaulting to Delhi
+
+Favorite cities — pin cities and switch between them quickly
