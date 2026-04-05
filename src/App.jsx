@@ -66,9 +66,9 @@ function App() {
         cityData && <SunState astro={cityData.forecast.forecastday[0].astro} />
       )}
       {loading ? (
-        <Skeleton variant="rounded" className='!w-[90%] md:!w-2xl lg:!w-5xl !h-48 md:!h-56 !mx-auto !rounded-2xl' />
+        <Skeleton variant="rounded" className='!w-[90%] md:!w-2xl lg:!w-5xl !h-24 !mx-auto !rounded-2xl' />
       ) : (
-        cityData && <Forecast forecastData={cityData.forecast} daysfunc={setDays} days={days} />
+        cityData && <AirQuality airQuality={cityData.current.air_quality} />
       )}
       {loading ? (
         <Skeleton variant="rounded" className='!w-[90%] md:!w-2xl lg:!w-5xl !h-48 md:!h-56 !mx-auto !rounded-2xl' />
@@ -76,9 +76,9 @@ function App() {
         cityData && <Chart forecastHourly={cityData.forecast.forecastday[0].hour} />
       )}
       {loading ? (
-        <Skeleton variant="rounded" className='!w-[90%] md:!w-2xl lg:!w-5xl !h-24 !mx-auto !rounded-2xl' />
+        <Skeleton variant="rounded" className='!w-[90%] md:!w-2xl lg:!w-5xl !h-48 md:!h-56 !mx-auto !rounded-2xl' />
       ) : (
-        cityData && <AirQuality airQuality={cityData.current.air_quality} />
+        cityData && <Forecast forecastData={cityData.forecast} daysfunc={setDays} days={days} />
       )}
       <Footer />
     </div>
