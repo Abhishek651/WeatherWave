@@ -10,10 +10,10 @@ export default function Footer() {
             </p>
             
             <div className="flex items-center gap-3 mt-1">
-                <a href="https://github.com/yourprofile/weatherwave" target="_blank" className="text-gray-400 hover:text-white">
+                <a href="https://github.com/Abhishek651/WeatherWave" target="_blank" className="text-gray-400 hover:text-white">
                     <GitHubIcon sx={{ fontSize: 20 }} />
                 </a>
-                <a href="https://linkedin.com/in/yourprofile" target="_blank" className="text-gray-400 hover:text-blue-400">
+                <a href="https://www.linkedin.com/in/abhishek700/" target="_blank" className="text-gray-400 hover:text-blue-400">
                     <LinkedInIcon sx={{ fontSize: 20 }} />
                 </a>
             </div>
