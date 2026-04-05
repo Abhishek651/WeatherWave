@@ -1,5 +1,7 @@
 # 🌊 WeatherWave
 
+**Live Demo:** [https://weatherwave-ojrg.onrender.com/](https://weatherwave-ojrg.onrender.com/)
+
 A responsive weather app built with React + Vite as a hands-on learning project. Search any city and get real-time weather, a multi-day forecast, sunrise/sunset times, and an hourly temperature chart — all wrapped in animated CSS weather icons.
 
 ---
